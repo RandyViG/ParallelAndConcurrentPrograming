@@ -1,5 +1,8 @@
-# Archivo Makefile basico
+# Archivo Makefile Geneal con objetivos falsos,
+# variables automáticas y reglas de patrón
+
 PROYECTO=muestreo
+OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 DESTDIR=/usr/local/bin
 CFLAGS=-Wall
 LFLAGS=-lm
@@ -7,17 +10,11 @@ CC=gcc
 
 all: $(PROYECTO)
 
-muestreo.o: muestreo.c
-	$(CC) -c muestreo.c $(CFLAGS)
+%.o: %.c
+	${CC} -c $< $(CFLAGS)
 
-procesamiento.o: procesamiento.c
-	$(CC) -c procesamiento.c $(CFLAGS)
-
-archivos.o: archivos.c
-	$(CC) -c archivos.c $(CFLAGS)
-
-$(PROYECTO): muestreo.o procesamiento.o archivos.o
-	$(CC) muestreo.o procesamiento.o archivos.o -o $(PROYECTO) $(LFLAGS)
+$(PROYECTO): ${OBJECTS}
+	$(CC) $^ -o $@ $(LFLAGS)
 
 .PHONY: clean
 
