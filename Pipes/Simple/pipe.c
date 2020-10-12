@@ -45,7 +45,7 @@ void proceso_padre( int pipefd[] ){
 		pid = wait(&estado);
 		numproc = estado >> 8;
 		read( pipefd[0] , &result, sizeof(int) );
-		printf("Termino el proceso %d \n",numproc);
+		printf("Termino el proceso %d con pid: %d \n",numproc,pid);
 
 		if( numproc == 0  )
 			printf("La suma es: %d\n", result);
@@ -56,6 +56,7 @@ void proceso_padre( int pipefd[] ){
 		else if( numproc == 3 )
 			printf("La división es: %d\n", result);
 	}
+	close( pipefd[0] );
 }
 
 void proceso_hijo( int np , int pipefd[] ){
