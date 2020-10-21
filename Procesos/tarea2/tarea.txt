@@ -1,0 +1,21 @@
+Hacer un programa que genere 4 procesos hijos y un conjuntode 128 valores enteros
+cada proceso ejecutara un algoritmo de los siguientes:
+
+1. Realizar el ordenamiento de los valores enteros. Usar el algoritmo de burbuja.(programado por el alumno). Utilizar el mismo arreglo para regresar el ordenamiento. No usar arreglos auxiliares
+2. Calcular el promedio del conjunto de valores. Mostrar el valor entero del promedio.
+3. Obtener cuantos números pares existen en el conjunto de datos.
+4. Multiplicar el conjutno de valores enteros por una constante (c=10). Utilizar el mismo arreglo para regresar el producto. No usar arreglos auxiliares.
+
+Genarar un proyecto con los siguienes archivos:
+
+1. principal.c este archivo debe de contener a la función main.
+2. procesos.c este archivo debe tener las funciones del proceso hijo y proceso 
+   padre.
+3. procesamiento.c este archivo debe tener las funciones de los algoritmos.
+4. helper.c este archivo debe tener ñas funcones de resevarMemoria, llenarArreglo 
+   e imprimirArreglo
+5. Definir los archivos .h correspondientes, procesos.h, procesamiento.h, helper.h
+   y defs.h deonde se definirá N y NUM_PROC.
+6. Archivo Makefile completo.
+
+
