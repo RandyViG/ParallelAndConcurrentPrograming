@@ -9,8 +9,9 @@
 
 void procesoPadre( int pipefd[NUM_PROC][2] ){
 	pid_t pid;
-	int estado, numproc, result;
+	int estado, numproc, result, *datos;
 	register int np;
+	datos = reservarMemoria();
 
 	for( np = 0 ; np  < NUM_PROC ; np++ ){
 		close( pipefd[np][1] );
@@ -18,25 +19,29 @@ void procesoPadre( int pipefd[NUM_PROC][2] ){
 		numproc = estado >> 8;
 		
 		printf("\nTermino el proceso %d con pid: %d\n", numproc, pid);
-		read( pipefd[numproc][0] ,&result , sizeof(int) );
 
 		if( numproc == 0 ){
+			read( pipefd[numproc][0] , datos , sizeof(int)*N );
 			printf("Los datos ordenados son:\n");
-			printf("%4d ", result);
-			recibirArreglo( pipefd[numproc] );
+			imprimirArreglo( datos );
 		}
-		else if( numproc == 1 )
+		else if( numproc == 1 ){
+			read( pipefd[numproc][0] , &result , sizeof(int) );
 			printf("El promedio es: %d\n", result);
-		else if( numproc == 2 )
+		}
+		else if( numproc == 2 ){
+			read( pipefd[numproc][0] , &result , sizeof(int) );
 			printf("El total de numeros pares es: %d\n", result);
+		}
 		else if( numproc == 3 ){
+			read( pipefd[numproc][0] , datos , sizeof(int)*N );
 			printf("Los datos multiplicados son:\n");
-			printf("%4d ", result);
-			recibirArreglo( pipefd[numproc] );
+			imprimirArreglo( datos );
 		}
 
 		close( pipefd[numproc][0] );
 	}
+	free( datos );
 }
 
 void procesoHijo( int np, int *datos, int pipefd[] ){
@@ -45,21 +50,22 @@ void procesoHijo( int np, int *datos, int pipefd[] ){
 
 	if( np == 0 ){
 		ordenamiento( datos );
-		enviarArreglo( datos, pipefd );
-		exit( np );
+		write( pipefd[1], datos, sizeof(int)*N );
 	}
-	else if( np == 1 )
+	else if( np == 1 ){
 		result = promedio( datos );
-	else if( np == 2)
+		write( pipefd[1], &result, sizeof(int) );
+	}	
+	else if( np == 2){
 		result = numerosPares( datos );
+		write( pipefd[1], &result, sizeof(int) );
+	}
 	else if( np == 3 ){
 		multiplicarDatos( datos );
-		enviarArreglo( datos, pipefd  );
-		exit( np );
+		write( pipefd[1], datos, sizeof(int)*N );
 	}
 	
-	write( pipefd[1], &result, sizeof(int) );
-	
+	free( datos );
 	close( pipefd[1] );
 	exit( np );
 }

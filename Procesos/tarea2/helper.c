@@ -30,21 +30,3 @@ void imprimirArreglo( int *datos){
 	printf("\n");	
 }
 
-void enviarArreglo( int *datos, int pipefd[] ){
-	register int i;
-	for( i = 0 ; i < N ; i++)
-		write( pipefd[1], &datos[i], sizeof(int) );
-	close( pipefd[1] );
-}
-
-void recibirArreglo( int pipefd[] ){
-	int dato;
-	register int i;
-	for( i = 1 ; i < N ; i++){
-		read( pipefd[0], &dato, sizeof(int) );
-		if( !(i%16) )
-			printf("\n");
-		printf("%4d ",dato);
-	}
-	printf("\n");	
-}
