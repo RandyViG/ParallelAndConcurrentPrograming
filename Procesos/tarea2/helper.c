@@ -40,7 +40,7 @@ void enviarArreglo( int *datos, int pipefd[] ){
 void recibirArreglo( int pipefd[] ){
 	int dato;
 	register int i;
-	for( i = 0 ; i < N ; i++){
+	for( i = 1 ; i < N ; i++){
 		read( pipefd[0], &dato, sizeof(int) );
 		if( !(i%16) )
 			printf("\n");

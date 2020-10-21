@@ -1,4 +1,4 @@
-PROYECTO=tarea
+PROYECTO=tarea2
 OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 DESTDIR=/usr/local/bin
 CFLAGS=-Wall

@@ -10,11 +10,12 @@ int main( void ){
 	pid_t pid;
 	register int np;
 	int *datos, edo_pipe, pipefd[NUM_PROC][2];
-	printf("Tarea 2: Procesos con pipes...\n");	
+	
+	printf("\n\t\t\t... Tarea 2: Procesos con pipes ...\n");	
 	srand( getpid() );
 	datos = reservarMemoria();
 	llenarArreglo( datos );
-	printf("Arreglo generado:\n");
+	printf("\nArreglo generado:\n");
 	imprimirArreglo( datos );
 	
 	for( np = 0; np < NUM_PROC ; np++ ){
