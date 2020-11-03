@@ -1,0 +1,28 @@
+Hacer un programa que genere 4 Hilosy un conjuntode 128 valores enteros
+cada proceso ejecutara un algoritmo de los siguientes:
+
+a) Usar un arreglo GLOBAL para los 128 valores enteros.
+
+Cada Hilo ejecutará un algortimo de los siguientes
+
+1. Realizar el ordenamiento de los valores enteros. Usar el algoritmo de burbuja
+   (programado por el alumno). Utilizar el mismo arreglo para regresar el 
+   ordenamiento. No usar arreglos auxiliares
+2. Calcular el promedio del conjunto de valores. Mostrar el valor entero del promedio.
+3. Obtener cuantos números pares existen en el conjunto de datos.
+4. Calcular la cantidad de números primos contenidos en el arreglo.
+
+b) El proceso padre (main) debe imprimir los resultados de cada hilo. Los resultados 
+   deben colocarse en variables globales.
+
+Genarar un proyecto con los siguienes archivos:
+
+1. principal.c este archivo debe de contener a la función main.
+2. hilos.c este archivo debe tener la funcion del hilo.
+3. procesamiento.c este archivo debe tener las funciones de los algoritmos.
+4. helper.c este archivo debe tener ñas funcones de resevarMemoria, llenarArreglo e 
+   imprimirArreglo.
+5. Definir los archivos *.h correspondientes, hilos.h, procesamiento.h, helper.h y 
+   defs.h deonde se definirá N y NUM_PROC.
+6. Archivo Makefile completo.
+
