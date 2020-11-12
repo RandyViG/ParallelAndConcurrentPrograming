@@ -23,6 +23,8 @@ void leer_archivo( float *datos, char *archivo ){
 		perror("Error al abrir el archivo");
 		exit(EXIT_FAILURE);
 	}
-	for( n = 0; n < N ; n++ )
+	for( n = 0; n < N ; n++ ){
 		fscanf(apArch, "%f\n", &datos[n]);
+		datos[n] -= 2200;
+	}
 }
