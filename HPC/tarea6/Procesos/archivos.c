@@ -13,6 +13,7 @@ void guardar_archivo( float *datos, char *archivo){
 	}
 	for( n = 0 ; n < N ; n++ )
 		fprintf(apArch, "%f\n",datos[n]);
+	fclose( apArch );
 }
 
 void leer_archivo( float *datos, char *archivo ){
@@ -27,4 +28,5 @@ void leer_archivo( float *datos, char *archivo ){
 		fscanf(apArch, "%f\n", &datos[n]);
 		datos[n] -= 2200;
 	}
+	fclose( apArch );
 }

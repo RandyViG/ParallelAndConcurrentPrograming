@@ -14,7 +14,7 @@ int main( void ){
 	int edo_pipe, pipefd[NUM_PROC][2];
 	float *pulso, *hann, *producto, *resultado;
 
-	printf("\n\t\t\t... Tarea 4: Algoritmo de Ventaneo ...\n");
+	printf("\n\t\t\t... Tarea 6: Algoritmo de Ventaneo ...\n");
 	pulso = reservar_memoria();
 	hann = reservar_memoria();
 	producto = reservar_memoria();
