@@ -15,7 +15,7 @@ int main( void ){
 	pthread_t tids[NUM_HILOS];
 	register int nh;
 
-	printf("\n\t\t\t... Tarea 6: Algoritmo de Ventaneo ...\n");
+	printf("\n\t\t\t... Tarea 6: Autocorrelación ...\n");
 	pulso = reservar_memoria();
 	hann = reservar_memoria();
 	producto = reservar_memoria();
