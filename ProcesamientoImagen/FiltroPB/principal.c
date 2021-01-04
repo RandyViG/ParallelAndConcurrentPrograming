@@ -20,17 +20,22 @@ int main( void ){
 	
 	imagenGray = reservar_memoria( info.width, info.height );
 	imagenFiltrada = reservar_memoria( info.width, info.height );
-
+	printf("Rgb to gray\n");
 	RGBToGray( imagenRGB, imagenGray, info.width, info.height );
 	memset( imagenFiltrada, 255, info.width * info.height );
+	printf("Filtro PB\n");
 	filtroPB( imagenGray, imagenFiltrada, info.width, info.height );
 	//brilloImagen( imagenGray, info.width, info.height );
-	GrayToRGB( imagenRGB, imagenGray, info.width, info.height );
+	printf("Gray to RGB\n");
+	GrayToRGB( imagenRGB, imagenFiltrada, info.width, info.height );
 	
+	printf("Guardar\n");
 	guardarBMP( "huella1_FPB1.bmp", &info, imagenRGB );
+	printf("Guardar 2\n");
 
 	free( imagenRGB );
 	free( imagenGray );
+	free( imagenFiltrada );
 
 	return 0;
 }
@@ -79,7 +84,7 @@ void filtroPB( unsigned char *imagenGray, unsigned char *imagenFiltrada, uint32_
 	int indicei, indicem, conv;
 	int mascara[DIMASK*DIMASK] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-	for( y = 0 ; y <= ( width - DIMASK ) ; y++ )
+	for( y = 0 ; y <= ( height - DIMASK ) ; y++ )
 		for( x = 0 ; x <= ( width - DIMASK ) ; x++ ){
 			indicem = 0;
 			conv = 0;
