@@ -21,7 +21,7 @@ void * filtroPB( void *args ){
 	eleBloque = parametros->height / NUM_HILOS;
 	inicio = nucleo * eleBloque;
 	fin = inicio + eleBloque;
-	fin = (fin == parametros->height) ? parametros->height - DIMASK : fin;
+	fin = ( nucleo == NUM_HILOS - 1 ) ? fin - DIMASK : fin;
 	for( y = inicio ; y <= fin ; y++ )
     	for( x = 0 ; x <= ( parametros->width - DIMASK ) ; x++ ){
         	indicem = 0;
