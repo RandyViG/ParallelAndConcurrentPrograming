@@ -32,7 +32,7 @@ void * filtroPB( void *args ){
                     conv += imagenGray[indicei] * kernelGaussiano[indicem++];
                 }
             conv /= factor;
-            indicei = (y+1) * parametros->width + (x+1);
+            indicei = (y+2) * parametros->width + (x+2);
             imagenFiltrada[indicei] = conv;
         }
 	pthread_exit( (void*)&parametros->nh );
