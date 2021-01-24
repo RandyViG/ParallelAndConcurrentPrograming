@@ -5,6 +5,7 @@
 Este repositorio contiene los códigos, prácticas elaborados en la materia *Parallel and Concurrent Programing* donde se enseñan técnicas de paralelización de algoritmos mediante el uso de procesos e hilos, con un enfoque en sistemas embebidos. 
 
 **SoC: Raspberry PI**
+
 **Lenguaje de Programación: C**
 
 ##Prácticas
