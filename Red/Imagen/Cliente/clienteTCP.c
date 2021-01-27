@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include "imagen.h"
+
+#define PUERTO 5001
+#define TAM_BUFFER 100
+#define DIR_IP "192.168.0.100"
+
+unsigned char * reservar_memoria( int tam );
+void GrayToRGB( unsigned char *imagenRGB, unsigned char *imagenGray, uint32_t width, uint32_t height );
+void recibir_imagen( int sockfd, unsigned char *imagen, int tamImagen );
+
+int main(int argc, char **argv){
+	int sockfd;
+	struct sockaddr_in direccion_servidor;
+	unsigned char *imagen, *imagenRGB;
+	bmpInfoHeader info;
+
+	memset (&direccion_servidor, 0, sizeof (direccion_servidor));
+	direccion_servidor.sin_family = AF_INET;
+	direccion_servidor.sin_port = htons(PUERTO);
+	if( inet_pton(AF_INET, DIR_IP, &direccion_servidor.sin_addr) <= 0 ){
+		perror("Ocurrio un error al momento de asignar la direccion IP");
+		exit(1);
+	}
+	printf("Creando Socket ....\n");
+	if( (sockfd = socket (AF_INET, SOCK_STREAM, 0)) < 0 ){
+		perror("Ocurrio un problema en la creacion del socket");
+		exit(1);
+	}
+	printf ("Estableciendo conexion ...\n");
+	if( connect(sockfd, (struct sockaddr *)&direccion_servidor, sizeof(direccion_servidor) ) < 0) {
+		perror ("Ocurrio un problema al establecer la conexion");
+		exit(1);
+	}
+	printf ("Enviando mensaje al servidor ...\n");
+	if( write(sockfd, "Soy el Cliente", 15) < 0 ){
+		perror("Ocurrio un problema en el envio de un mensaje al cliente");
+		exit(1);
+	}
+
+	printf ("Recibiendo contestacion del servidor ...\n");
+	if (read (sockfd, &info, sizeof( bmpInfoHeader ) ) < 0){
+		perror ("Ocurrio algun problema al recibir datos del servidor");
+		exit(1);
+	}
+	displayInfo( &info );
+	
+	imagen = reservar_memoria( info.width * info.height );
+	imagenRGB = reservar_memoria( info.width * info.height * 3 );
+
+
+	recibir_imagen( sockfd, imagen, info.width * info.height );
+
+	GrayToRGB( imagenRGB, imagen, info.width, info.height );
+	
+	guardarBMP("Server_huella.bmp", &info, imagenRGB );
+
+	printf("Cerrando la aplicacion cliente\n");
+	close(sockfd);
+
+	free ( imagen );
+	free( imagenRGB );
+
+	return 0;
+}
+
+void recibir_imagen( int sockfd, unsigned char *imagen, int tamImagen ){
+	int bytesRecibidos = 0, aux, tamLectura;
+	tamLectura = tamImagen;
+	
+	while( bytesRecibidos < tamImagen ){
+		aux = read(sockfd, imagen + bytesRecibidos, tamLectura );
+		if( aux < 0 ){
+			perror("Ocurrio algun problema al recibir datos del servidor");
+			exit(1);
+		}
+		printf("\rBytes recibidos: %d", bytesRecibidos+=aux );
+		tamLectura = tamImagen - bytesRecibidos;
+	}
+	printf("\n");
+}
+
+unsigned char * reservar_memoria( int tam ){
+   unsigned char *imagen;
+   
+	imagen = (unsigned char *)malloc( tam * sizeof(unsigned char) );
+   if( imagen == NULL ){
+   	perror("Error al asignar memoria a la imagen");
+      exit(EXIT_FAILURE);
+  	}
+
+   return imagen;
+}
+
+void GrayToRGB( unsigned char *imagenRGB, unsigned char *imagenGray, uint32_t width, uint32_t height ){
+        register int x, y;
+        int indiceGray, indiceRGB;
+        for( y = 0 ; y < height ; y++ )
+                for( x = 0 ; x < width ; x++ ){
+                        indiceGray = y *  width + x;
+                        indiceRGB = indiceGray * 3 ;
+                        imagenRGB[indiceRGB] = imagenGray[indiceGray];
+                        imagenRGB[indiceRGB+1] = imagenGray[indiceGray];
+                        imagenRGB[indiceRGB+2] = imagenGray[indiceGray];
+                }
+}
+
+
