@@ -8,7 +8,7 @@ Este repositorio contiene los códigos y prácticas elaborados en la materia *Pa
 
 **Lenguaje de Programación: C**
 
-##Prácticas
+## Prácticas
 1. Crear archivo Makefile
 2. Repaso de Procesos
 3. Repaso de Hilos
@@ -17,3 +17,4 @@ Este repositorio contiene los códigos y prácticas elaborados en la materia *Pa
 6. Función de Autocorrelación
 7. Filtro Gaussiano
 8. Segmentación usando Sobel
+9. Servidor de Imagenes
